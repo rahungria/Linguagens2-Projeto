@@ -1,0 +1,14 @@
+<mat-card class="card-picture">
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <span fxFlex="70%" fxLayoutAlign="left">{{seguro.name}}</span>
+
+    <mat-icon fxFlex="15%" fxLayoutAlign="center">mode_edit</mat-icon>
+    <mat-icon fxFlex="15%" fxLayoutAlign="center">delete</mat-icon>
+  </mat-card-title>
+  <img mat-card-image [src]="seguro.imgurl">
+  <mat-card-content>
+    <p>{{seguro.brief}}</p>
+    <mat-divider></mat-divider>
+    <button class="more" mat-raised-button color="accent">Shishiro</button>
+  </mat-card-content>
+</mat-card>
