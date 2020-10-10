@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Seguro } from "../../model/seguro";
+import { Seguro } from "src/app/model/seguro/seguro";
 
 @Component({
   selector: 'app-lista-seguros',

@@ -9,11 +9,9 @@ import { CustomFormBase } from 'src/app/model/custom-forms/form-base/custom-form
 })
 export class CustomFormsService {
 
-  // FLOW
-  // 1. http get seguro schema for given id
-  // 2. parse json create custom forms
-  // 3. build the FormGroup
-
+  // TODO:
+  // CREATE DYNAMIC FORM CONTROL COMPONENT
+  // CREATE DYNAMIC FORM GROUP COMPONENT TO LOOP THROUGH INPUTED DYNAMIC FORM CONTROL
   constructor(private http: HttpClient) {
   }
 
@@ -35,14 +33,23 @@ export class CustomFormsService {
     return new Promise<FormGroup>((resolve, reject) => {
       try
       {
-        const group : {[key:string]: AbstractControl} = {}
+        // const group : {[key:string]: AbstractControl} = {}
+        let group = new FormGroup({});
 
-        customForms.map((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
+        customForms.forEach((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
           let val :T = cControl.value;
-          group[cControl.key] = (cControl.required ? new FormControl(val, Validators.required) : new FormControl(val))
-        });
 
-        resolve(new FormGroup(group))
+          if (cControl.validators.required){
+            group.registerControl(cControl.key, new FormControl(cControl.value, Validators.required));
+          }
+          else {
+            group.registerControl(cControl.key, new FormControl(cControl.value));
+          }
+          // group[cControl.key] = (cControl.required ? new FormControl(val, Validators.required) : new FormControl(val))
+
+        });
+        console.log(group);
+        resolve(group)
       }
       catch (err)
       {
@@ -55,11 +62,15 @@ export class CustomFormsService {
   {
       const group : {[key:string]: AbstractControl} = {}
 
-      customForms.map((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
-        let val: T = cControl.value;
-        group[cControl.key] = (cControl.required ? new FormControl(val, Validators.required) : new FormControl(val))
-      });
+      let formgroup : FormGroup = new FormGroup({});
 
-      return new FormGroup(group);
+      customForms.forEach((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
+        let val: T = cControl.value;
+        // group[cControl.key] = (cControl.required ? new FormControl(val, Validators.required) : new FormControl(val))
+        (cControl.validators.required ? formgroup.registerControl(cControl.key, new FormControl(cControl.value, [Validators.required])) : formgroup.registerControl(cControl.key, new FormControl(cControl.value)))
+      });
+      console.log(formgroup);
+
+      return formgroup;
   }
 }
