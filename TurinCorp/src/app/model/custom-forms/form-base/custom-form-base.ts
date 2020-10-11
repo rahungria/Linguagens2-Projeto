@@ -5,22 +5,29 @@ export class CustomFormBase <T>{
   order: number;
   controlType: string;
   type: string;
+  multiple: string;
   options: {key: string, value: string}[];
+  hint: string;
+  error: string;
   validators: {
-    required?: boolean;
-    email?: boolean;
+    // required?: boolean;
+    // email?: boolean;
+    [key: string]: boolean;
   }; // maybe find better way than if (form.validators.required) ...
+
 
   constructor( options: {
     value?: T;
     key?: string;
     label?: string;
-    required?: boolean;
     order?: number;
     controlType?: string;
     type?: string;
+    multiple?: boolean;
+    hint?: string;
+    error?: string;
     options?: {key: string, value: string}[];
-    validators?: {required?: boolean, email?: boolean}
+    validators?: {required?: boolean, email?: boolean} // ou {[key: string]: boolean} e so ir adicionando?
   } = {}) {
     this.value = options.value;
     this.key = options.key || '';
@@ -30,5 +37,7 @@ export class CustomFormBase <T>{
     this.type = options.type || '';
     this.options = options.options || [];
     this.validators = options.validators;
+    this.hint = options.hint;
+    this.error = options.error;
   }
 }

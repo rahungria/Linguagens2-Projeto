@@ -6,3 +6,12 @@
 span {
   padding-right: 1rem;
 }
+
+button.link-btn {
+  background-color: transparent;
+  color: white;
+}
+
+#toolbar {
+  position: relative;
+}

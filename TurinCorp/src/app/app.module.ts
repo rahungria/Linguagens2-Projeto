@@ -12,6 +12,9 @@ import { MatButtonModule }        from "@angular/material/button";
 import { MatListModule }          from "@angular/material/list";
 import { MatDividerModule }       from "@angular/material/divider";
 import { MatInputModule }         from '@angular/material/input'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatFormFieldModule }     from '@angular/material/form-field';
+import { MatSelectModule }        from '@angular/material/select';
 
 import { AppRoutingModule }         from './app-routing.module';
 import { AppComponent }             from './app.component';
@@ -20,8 +23,8 @@ import { HomeComponent }            from 'src/app/components/home/home.component
 import { NavbarComponent }          from 'src/app/components/navbar/navbar.component';
 import { SeguroCardComponent }      from 'src/app/components/seguro-card/seguro-card.component';
 import { ListaSegurosComponent }    from 'src/app/components/home/lista-seguros/lista-seguros.component';
-import { CustomFormControlComponent } from './components/custom-forms/custom-form-control/custom-form-control/custom-form-control.component';
 import { CustomFormGroupComponent } from './components/custom-forms/custom-form-group/custom-form-group/custom-form-group.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,6 @@ import { CustomFormGroupComponent } from './components/custom-forms/custom-form-
     NavbarComponent,
     SeguroCardComponent,
     ListaSegurosComponent,
-    CustomFormControlComponent,
     CustomFormGroupComponent
   ],
   imports: [
@@ -40,6 +42,7 @@ import { CustomFormGroupComponent } from './components/custom-forms/custom-form-
     HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    CommonModule,
 
     MatToolbarModule,
     MatIconModule,
@@ -49,6 +52,9 @@ import { CustomFormGroupComponent } from './components/custom-forms/custom-form-
     MatListModule,
     MatDividerModule,
     MatInputModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

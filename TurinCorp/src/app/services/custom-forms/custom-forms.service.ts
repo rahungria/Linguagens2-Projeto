@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 import { CustomFormBase } from 'src/app/model/custom-forms/form-base/custom-form-base';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,14 @@ export class CustomFormsService {
     <{form: CustomFormBase<string>[],
       statusCode: number,
       message: string}>
-      (`http://localhost:3000/api/seguro/${identifier}`)
+      (`${environment.protocol}://${environment.api_uri}/api/seguro/${identifier}`)
+  }
+
+  submitForm(formValue:any) {
+    return this.http.post
+    <{message: string,
+    statusCode: number}>
+    (`${environment.protocol}://${environment.api_uri}/api/seguro/answer`, formValue)
   }
 
   asyncFormGroupBuilder<T>(customForms: CustomFormBase<T>[]) : Promise<FormGroup>
@@ -33,23 +41,20 @@ export class CustomFormsService {
     return new Promise<FormGroup>((resolve, reject) => {
       try
       {
-        // const group : {[key:string]: AbstractControl} = {}
-        let group = new FormGroup({});
+        let formgroup = new FormGroup({});
 
         customForms.forEach((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
-          let val :T = cControl.value;
 
+          let validators : ValidatorFn[] = [];
           if (cControl.validators.required){
-            group.registerControl(cControl.key, new FormControl(cControl.value, Validators.required));
+            validators.push(Validators.required);
           }
-          else {
-            group.registerControl(cControl.key, new FormControl(cControl.value));
+          if (cControl.validators.email){
+            validators.push(Validators.email);
           }
-          // group[cControl.key] = (cControl.required ? new FormControl(val, Validators.required) : new FormControl(val))
-
+          formgroup.registerControl(cControl.key, new FormControl(cControl.value, validators));
         });
-        console.log(group);
-        resolve(group)
+        resolve(formgroup);
       }
       catch (err)
       {
@@ -60,14 +65,19 @@ export class CustomFormsService {
 
   formGroupBuilder<T>(customForms: CustomFormBase<T>[]) : FormGroup
   {
-      const group : {[key:string]: AbstractControl} = {}
-
       let formgroup : FormGroup = new FormGroup({});
 
       customForms.forEach((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
-        let val: T = cControl.value;
-        // group[cControl.key] = (cControl.required ? new FormControl(val, Validators.required) : new FormControl(val))
-        (cControl.validators.required ? formgroup.registerControl(cControl.key, new FormControl(cControl.value, [Validators.required])) : formgroup.registerControl(cControl.key, new FormControl(cControl.value)))
+
+        let validators : ValidatorFn[] = [];
+        if (cControl.validators.required){
+          validators.push(Validators.required);
+        }
+        if (cControl.validators.email){
+          validators.push(Validators.email);
+        }
+        formgroup.registerControl(cControl.key, new FormControl(cControl.value, validators));
+        // (cControl.validators.required ? formgroup.registerControl(cControl.key, new FormControl(cControl.value, [Validators.required])) : formgroup.registerControl(cControl.key, new FormControl(cControl.value)))
       });
       console.log(formgroup);
 

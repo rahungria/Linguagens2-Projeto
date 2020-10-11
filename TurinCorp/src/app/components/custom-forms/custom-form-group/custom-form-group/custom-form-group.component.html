@@ -1,9 +1,39 @@
-<form [formGroup]="dynForm" (ngSubmit)="submitForm(dynForm)">
-  <div *ngFor="let control of customFBs">
-    <mat-form-field appearance="fill">
-      <mat-label>{{ control.label }}</mat-label>
-      <input matInput [type]="control.type" [formControlName]="control?.key">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<form [formGroup]="dynForm" (ngSubmit)="submitForm(dynForm)" *ngIf="!isLoading">
+  <div
+  *ngFor="let control of customFBs"
+  [ngSwitch]="control.controlType">
+
+  <!-- normal text -->
+    <mat-form-field
+    appearance="fill"
+    [hideRequiredMarker]="!control.validators.required"
+    [ngSwitch]="control.controlType"
+    *ngSwitchCase="'dropdown'">
+        <mat-label>{{ control.label }}</mat-label>
+        <mat-select [id]="control.key" [formControlName]="control.key" [required]="control.validators.required" [multiple]="control.multiple">
+          <mat-option *ngFor="let opt of control.options" [value]="opt.value">{{opt.key}}</mat-option>
+        </mat-select>
+        <mat-hint *ngIf="control.hint">{{ control.hint }}</mat-hint>
+        <mat-error align="end" *ngIf="control.error && dynForm.controls[control.key].invalid">{{ control.error }}</mat-error>
+    </mat-form-field>
+
+    <!-- default to normal text input control type -->
+    <mat-form-field
+    appearance="fill"
+    [hideRequiredMarker]="!control.validators.required"
+    [ngSwitch]="control.controlType"
+    *ngSwitchDefault>
+        <mat-label>{{ control.label }}</mat-label>
+        <input matInput [type]="control.type" [formControlName]="control.key" [id]="control.key" [required]="control.validators.required">
+        <mat-hint *ngIf="control.hint">{{ control.hint }}</mat-hint>
+        <mat-error align="end" *ngIf="control.error && dynForm.controls[control.key].invalid">{{ control.error }}</mat-error>
     </mat-form-field>
   </div>
-  <button mat-raised-button type="submit">Submit</button>
+  <button
+  mat-raised-button
+  type="submit"
+  color="primary"
+  [disabled]="dynForm.invalid"
+  >Submit</button>
 </form>
