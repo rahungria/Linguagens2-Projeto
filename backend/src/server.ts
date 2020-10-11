@@ -1,5 +1,5 @@
 // import { router } from 'src/router';
-import { router } from "src/router";
+import { router } from "@src/router";
 import express from "express";
 import body_parser from "body-parser";
 
