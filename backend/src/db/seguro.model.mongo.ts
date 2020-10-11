@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-import { ISeguro } from '../../model/seguros';
+import { ISeguro } from "src/model/seguro.model";
 
 type SeguroModel = ISeguro & mongoose.Document;
 

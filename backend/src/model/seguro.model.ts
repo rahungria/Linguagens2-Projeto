@@ -11,8 +11,6 @@
 // export { mongoose.model('Seguro', seguroSchema) as seguroSchema }
 // module.exports = mongoose.model('Seguro', seguroSchema);
 
-import {  } from "mongoose";
-
 export interface ISeguro {
   // schema ainda nao definido
 }
