@@ -32,7 +32,8 @@ export class CustomFormsService {
   submitForm(formValue:any) {
     return this.http.post
     <{message: string,
-    statusCode: number}>
+    statusCode: number,
+    form: any}>
     (`${environment.protocol}://${environment.api_uri}/api/seguro/answer`, formValue)
   }
 
@@ -46,10 +47,10 @@ export class CustomFormsService {
         customForms.forEach((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
 
           let validators : ValidatorFn[] = [];
-          if (cControl.validators.required){
+          if (cControl.validators?.required){
             validators.push(Validators.required);
           }
-          if (cControl.validators.email){
+          if (cControl.validators?.email){
             validators.push(Validators.email);
           }
           formgroup.registerControl(cControl.key, new FormControl(cControl.value, validators));
@@ -70,10 +71,10 @@ export class CustomFormsService {
       customForms.forEach((cControl: CustomFormBase<T>, index: number, array:CustomFormBase<T>[]) => {
 
         let validators : ValidatorFn[] = [];
-        if (cControl.validators.required){
+        if (cControl.validators?.required){
           validators.push(Validators.required);
         }
-        if (cControl.validators.email){
+        if (cControl.validators?.email){
           validators.push(Validators.email);
         }
         formgroup.registerControl(cControl.key, new FormControl(cControl.value, validators));

@@ -45,12 +45,12 @@ export class CustomFormGroupComponent implements OnInit {
         type: "textbox",
         controlType: "text",
         order: 3,
-        hint: "dropando la hint",
+        hint: "Aqui vc poe o nome",
         error: "Nome obrigatório",
       }),
       new CustomFormBase({
-        label:"Voce da o Cú?: ",
-        key: "status da bunda",
+        label:"Status da Amizade:",
+        key: "status da amizade",
         validators: {
           required: true,
         },
@@ -60,7 +60,11 @@ export class CustomFormGroupComponent implements OnInit {
         hint: "dropdown essencial",
         error: "tem que admitir",
         multiple: true,
-        options: [{key: "LABEL1", value:'VAL1'}, {key:'LABEL2', value:"VAL2"}, {key:'LABEL3', value:'VAL3'}]
+        options: [
+          {key: "mal", value:'devastada'},
+          {key:'um pouco', value:"levemente espatifada"},
+          {key:'muito', value:'pristina'}
+        ]
       }),
   ]
     // sync
@@ -93,7 +97,10 @@ export class CustomFormGroupComponent implements OnInit {
     if (form.invalid){
       return;
     }
-    console.log(form.value);
+    this.customFormsService.submitForm(form.value)
+      .subscribe( (res) => {
+        console.log(res);
+      })
   }
 
 }
