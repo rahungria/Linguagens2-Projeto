@@ -1,7 +1,17 @@
-// import { router } from 'src/router';
-import { router } from "@src/router";
 import express from "express";
 import body_parser from "body-parser";
+
+import { router } from "@src/router";
+import { Connect } from "@config/dbconnection";
+import { secrets } from "@config/secrets/secrets";
+
+Connect(secrets.mongodb_connection_string)
+  .then((conn) => {
+    console.log("Connection Successful")
+  })
+  .catch((reason) => {
+    console.log("Connection Failed:\n" + reason);    
+  })
 
 const app = express();
 app.use(body_parser.urlencoded({extended: true}));
@@ -24,6 +34,6 @@ app.use((req,res,next) => {
 app.use(router);
 
 const port = process.env.PORT || "3000";
-app.listen(port);
 console.log("running on port: " + port);
+app.listen(port);
 
