@@ -1,11 +1,16 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 import { ISeguro } from "src/model/seguro.model";
 
-type SeguroModel = ISeguro & mongoose.Document;
+type SeguroModel = ISeguro & Document;
 
-const SeguroSchema : Schema<SeguroModel> = new mongoose.Schema<SeguroModel>({
+const SeguroSchema : Schema<SeguroModel> = new Schema<SeguroModel>({
   // declaração do schema
 });
 
 const Seguro = mongoose.model<SeguroModel>('Seguro', SeguroSchema);
+
+export { 
+  SeguroModel as SeguroDBModel, 
+  Seguro,
+}
