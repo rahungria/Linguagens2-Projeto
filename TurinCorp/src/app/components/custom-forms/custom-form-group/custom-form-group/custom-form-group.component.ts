@@ -19,76 +19,42 @@ export class CustomFormGroupComponent implements OnInit {
 
   ngOnInit(): void
   {
+    // substituir por um valor inputado de fora ou passado de outro jeito
+    // até possivel tirar do OnInit se for o caso (handle em uma pagina sem form)
+    this.fetchFormData('auto');
+  }
+
+  fetchFormData(formId: string)
+  {
     this.isLoading = true;
 
-    //get from service->backend
-    this.customFBs  = [
-      new CustomFormBase({
-        label:"E-Mail: ",
-        key: "email",
-        validators: {
-          required: true,
-          email: true,
-        },
-        type: "email",
-        controlType: "text",
-        order: 2,
-        hint: "email para contato",
-        error: "POE CERTO DESSA VEZ",
-      }),
-      new CustomFormBase({
-        label:"Nome: ",
-        key: "name",
-        validators: {
-          required: true,
-        },
-        type: "textbox",
-        controlType: "text",
-        order: 3,
-        hint: "Aqui vc poe o nome",
-        error: "Nome obrigatório",
-      }),
-      new CustomFormBase({
-        label:"Status da Amizade:",
-        key: "status da amizade",
-        validators: {
-          required: true,
-        },
-        type: "text",
-        controlType: "dropdown",
-        order: 1,
-        hint: "dropdown essencial",
-        error: "tem que admitir",
-        multiple: true,
-        options: [
-          {key: "mal", value:'devastada'},
-          {key:'um pouco', value:"levemente espatifada"},
-          {key:'muito', value:'pristina'}
-        ]
-      }),
-  ]
-    // sync
-    // this.dynForm = this.customFormsService.formGroupBuilder([...this.customFBs]);
-    // this.isLoading = false;
+    this.customFormsService.getCustomForm(formId)
+      .subscribe( (res) => {
+        if (res.statusCode === 200){
+          this.customFBs = res.content.form.controls;
 
-    this.customFBs.sort( (a,b) => {
-      return a.order - b.order;
-    });
+          this.customFBs.sort( (a,b) => {
+            return a.order - b.order;
+          })
 
-    // async
-    // this.customFormsService.asyncFormGroupBuilder<string>([...this.customFBs])
-    //   .then((formGroup) => {
-    //     this.dynForm = formGroup;
-    //     this.isLoading = false;
-    //   })
-
-    // debug async
-    this.customFormsService.asyncFormGroupBuilder<string>([...this.customFBs])
-      .then((formGroup) => {
-        setTimeout(() => {
-          this.dynForm = formGroup;
+          this.customFormsService.asyncFormGroupBuilder<string>([...this.customFBs])
+          .then((formGroup) => {
+            this.dynForm = formGroup;
+            this.isLoading = false;
+          })
+        }
+        else if (res.statusCode === 404) {
+          // identificador usado para buscar seguros nao encontrado no sistema
+          //exibir alguma mensagem de erro, navegar para outra pagina etc
           this.isLoading = false;
-        }, 1500);
+          console.log(res.message);
+        }
+        else if (res.statusCode === 400) {
+          // algum erro nao identificado ao buscar os dados do banco de dados
+          //exibir alguma mensagem de erro, navegar para outra pagina etc
+          this.isLoading = false;
+          console.log(res.message);
+        }
       })
   }
 

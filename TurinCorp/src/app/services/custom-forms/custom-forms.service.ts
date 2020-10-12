@@ -23,9 +23,17 @@ export class CustomFormsService {
   getCustomForm(identifier: string)
   {
     return this.http.get
-    <{form: CustomFormBase<string>[],
+    <{
       statusCode: number,
-      message: string}>
+      message: string,
+      content?: {
+        form: {
+          _id: string,
+          identifier: string,
+          controls: CustomFormBase<string>[],
+        },
+      },
+    }>
       (`${environment.protocol}://${environment.api_uri}/api/seguro/${identifier}`)
   }
 
