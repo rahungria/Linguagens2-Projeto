@@ -4,6 +4,10 @@ import body_parser from "body-parser";
 import { router } from "@src/router";
 import { Connect } from "@config/dbconnection";
 import { secrets } from "@config/secrets/secrets";
+import { Emailer } from "@config/email/emailer.config"
+
+Emailer.setUpTransporter();
+
 
 Connect(secrets.mongodb_connection_string)
   .then((conn) => {
