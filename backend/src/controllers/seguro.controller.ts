@@ -16,6 +16,7 @@ export const getSeguroById = (req: Request, res: Response, next: NextFunction) =
       }
       // if found
       console.log(`Form requested by id: ${form.identifier}\n`);
+      console.log(form);
       return res.status(200).json({
         statusCode: 200,
         message: "Form Encontrado",

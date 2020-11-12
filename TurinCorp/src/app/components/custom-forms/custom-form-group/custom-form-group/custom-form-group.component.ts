@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CustomFormBase } from 'src/app/model/custom-forms/form-base/custom-form-base';
 import { CustomFormsService } from 'src/app/services/custom-forms/custom-forms.service';
 
@@ -15,13 +16,19 @@ export class CustomFormGroupComponent implements OnInit {
   customFBs : CustomFormBase<string>[];
   isLoading: boolean = true;
 
-  constructor(private customFormsService: CustomFormsService) { }
+  constructor(private customFormsService: CustomFormsService, private route:ActivatedRoute) { }
 
   ngOnInit(): void
   {
+    this.route.paramMap.subscribe( params => {
+      if (params.has("id")){
+        console.log(params);
+        this.fetchFormData(params.get("id"))
+      }
+    });
     // substituir por um valor inputado de fora ou passado de outro jeito
     // até possivel tirar do OnInit se for o caso (handle em uma pagina sem form)
-    this.fetchFormData('auto');
+    // this.fetchFormData('auto');
   }
 
   fetchFormData(formId: string)

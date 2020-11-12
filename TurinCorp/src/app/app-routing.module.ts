@@ -5,7 +5,8 @@ import { CustomFormGroupComponent } from 'src/app/components/custom-forms/custom
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
-  {path: "debug-form", component: CustomFormGroupComponent,},
+  {path: "debug-form", component: CustomFormGroupComponent},
+  {path: "seguro/:id", component: CustomFormGroupComponent}
 ];
 
 @NgModule({
