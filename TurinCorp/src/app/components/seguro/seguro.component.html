@@ -1,0 +1,22 @@
+
+
+
+<mat-card class="card-picture">
+     
+    <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+        <span fxFlex="70%" fxLayoutAlign="left">{{seguro.name}}</span>
+    </mat-card-title>
+    
+
+    <img mat-card-image [src]="seguro.imgurl">
+
+
+    <mat-card-content fxLayout.gt-xs="row" fxLayout.xs="column">
+
+        <p fxFlex="50%" fxLayoutAlign="left">{{seguro.brief}}</p>
+        <app-custom-form-group fxFlex="50%" fxLayoutAlign="right"></app-custom-form-group>
+
+    </mat-card-content>
+
+
+</mat-card>

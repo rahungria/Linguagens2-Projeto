@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { CustomFormGroupComponent } from 'src/app/components/custom-forms/custom-form-group/custom-form-group/custom-form-group.component';
+import { SeguroComponent } from './components/seguro/seguro.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "debug-form", component: CustomFormGroupComponent,},
+  {path: "debug-seguro", component: SeguroComponent,},
 ];
 
 @NgModule({
