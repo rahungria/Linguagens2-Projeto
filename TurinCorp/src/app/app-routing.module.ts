@@ -6,8 +6,8 @@ import { SeguroComponent } from './components/seguro/seguro.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
-  {path: "seguro/:id", component: CustomFormGroupComponent},
-  {path: "debug-seguro", component: SeguroComponent,},
+  {path: "seguro/:id", component: SeguroComponent},
+  // {path: "debug-seguro", component: SeguroComponent,},
 ];
 
 @NgModule({
