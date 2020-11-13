@@ -26,6 +26,7 @@ import { ListaSegurosComponent }    from 'src/app/components/home/lista-seguros/
 import { CustomFormGroupComponent } from './components/custom-forms/custom-form-group/custom-form-group/custom-form-group.component';
 import { CommonModule } from '@angular/common';
 import { SeguroComponent } from './components/seguro/seguro.component';
+import { SobreComponent } from './components/sobre/sobre.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SeguroComponent } from './components/seguro/seguro.component';
     SeguroCardComponent,
     ListaSegurosComponent,
     CustomFormGroupComponent,
-    SeguroComponent
+    SeguroComponent,
+    SobreComponent
   ],
   imports: [
     BrowserModule,
