@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 import { CustomFormBase } from 'src/app/model/custom-forms/form-base/custom-form-base';
+import { Seguro } from 'src/app/model/seguro/seguro';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -23,8 +24,7 @@ export class CustomFormsService {
   getCustomForm(identifier: string)
   {
     return this.http.get
-    <{
-      statusCode: number,
+    <{statusCode: number,
       message: string,
       content?: {
         form: {
@@ -34,7 +34,16 @@ export class CustomFormsService {
         },
       },
     }>
-      (`${environment.protocol}://${environment.api_uri}/api/seguro/${identifier}`)
+      (`${environment.protocol}://${environment.api_uri}/api/seguro/form/${identifier}`)
+  }
+
+  getSeguro(name:string)
+  {
+    return this.http.get
+    <{meta: { statusCode:Number, message:String },
+      content: { seguro:Seguro }
+    }>
+    (`${environment.protocol}://${environment.api_uri}/api/seguro/${name}`);
   }
 
   submitForm(formValue:any) {

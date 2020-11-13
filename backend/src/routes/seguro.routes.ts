@@ -1,13 +1,15 @@
 import { Router } from "express";
 
-import { addForm, getSeguroById, receiveFormAnswer } from "@controller/seguro.controller";
+import { addForm, addSeguro, getSeguroByName, getSeguroFormByID, receiveFormAnswer } from "@controller/seguro.controller";
 
 let router = Router();
 
-router.get('/:seguroId', getSeguroById);
+router.get('/:name', getSeguroByName);
+router.get('/form/:seguroId', getSeguroFormByID);
 
 router.post('/answer', receiveFormAnswer);
 
-router.post('/add_form', addForm)
+router.post('/form/create', addForm)
+router.post('/create', addSeguro)
 
 export { router as seguroRoutes }
