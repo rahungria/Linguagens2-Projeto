@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Seguro } from '../model/seguro/seguro';
 
+import { pipe } from "rxjs"
+import { map } from "rxjs/operators"
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,6 +39,12 @@ export class SegurosService {
         seguros: Seguro[]
       }
     }>
-    (`${environment.protocol}://${environment.api_uri}/api/seguro`);
+    (`${environment.protocol}://${environment.api_uri}/api/seguro`)
+    .pipe(
+      map(res => {
+        if (res.content)
+          return res.content.seguros
+      })
+    )
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Seguro } from "src/app/model/seguro/seguro";
+import { SegurosService } from 'src/app/services/seguros.service';
 
 @Component({
   selector: 'app-lista-seguros',
@@ -8,6 +9,8 @@ import { Seguro } from "src/app/model/seguro/seguro";
 })
 export class ListaSegurosComponent implements OnInit {
 
+  loading: boolean;
+  // placeholder, will be replaced at runtime
   seguros : Seguro[] = [
     {_id : "1",
     name : "Seguro 1",
@@ -27,9 +30,16 @@ export class ListaSegurosComponent implements OnInit {
     brief: "Description Seguro 3 lorem lorem lorem lorem",
     description: "empty"},
   ];
-  constructor() { }
+
+  constructor(private seguroService:SegurosService) { }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.seguroService.fetchAllSeguros()
+    .subscribe(seguros => {
+      this.seguros = seguros
+      this.loading = false
+    })
   }
 
 }
