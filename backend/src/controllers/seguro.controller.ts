@@ -4,6 +4,33 @@ import { SeguroFormModel, SeguroFormMongoModel } from "@db/seguroForm.model.mong
 import { Seguro, SeguroDBModel } from "@db/seguro.model.mongo";
 import { Emailer } from "@config/email/emailer.config";
 
+export const getAllSeguros = (req: Request, res: Response, next: NextFunction) =>
+{
+  Seguro.find()
+  .then(
+    seguros => {
+      return res.status(200).json({
+        meta: {
+          statusCode: 200,
+          msg: "Get all seguros"
+        },
+        content: {
+          seguros
+        }
+      })
+    },
+    reason => {
+      return res.status(400).json({
+        meta: {
+          statusCode: 400,
+          msg: "Get seguros failed",
+          reason
+        }
+      })
+    }
+  )
+}
+
 export const getSeguroFormByID = (req: Request, res: Response, next: NextFunction) => 
 {
   console.log(req.params);

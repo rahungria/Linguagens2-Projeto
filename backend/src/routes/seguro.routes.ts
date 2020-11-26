@@ -1,9 +1,10 @@
 import { Router } from "express";
 
-import { addForm, addSeguro, getSeguroByName, getSeguroFormByID, receiveFormAnswer } from "@controller/seguro.controller";
+import { addForm, addSeguro, getAllSeguros, getSeguroByName, getSeguroFormByID, receiveFormAnswer } from "@controller/seguro.controller";
 
 let router = Router();
 
+router.get("/", getAllSeguros);
 router.get('/:name', getSeguroByName);
 router.get('/form/:seguroId', getSeguroFormByID);
 
