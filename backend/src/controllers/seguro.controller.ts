@@ -24,7 +24,6 @@ export const getAllSeguros = (req: Request, res: Response, next: NextFunction) =
         meta: {
           statusCode: 400,
           msg: "Get seguros failed",
-          reason
         }
       })
     }

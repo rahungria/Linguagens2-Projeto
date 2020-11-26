@@ -17,10 +17,25 @@ export class SegurosService {
         statusCode: Number,
         message: String,
       },
-      content: {
+      content?: {
         seguro: Seguro
       }
     }>
     (`${environment.protocol}://${environment.api_uri}/api/seguro/${name}`);
+  }
+
+  public fetchAllSeguros()
+  {
+    return this.http.get
+    <{
+      meta: {
+        statusCode: Number,
+        msg: String
+      },
+      content?: {
+        seguros: Seguro[]
+      }
+    }>
+    (`${environment.protocol}://${environment.api_uri}/api/seguro`);
   }
 }
