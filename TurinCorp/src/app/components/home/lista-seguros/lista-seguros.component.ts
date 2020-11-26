@@ -35,7 +35,7 @@ export class ListaSegurosComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.seguroService.fetchAllSeguros()
+    this.seguroService.fetchAllSeguros(10)
     .subscribe(seguros => {
       this.seguros = seguros
       this.loading = false

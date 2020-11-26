@@ -6,7 +6,10 @@ import { Emailer } from "@config/email/emailer.config";
 
 export const getAllSeguros = (req: Request, res: Response, next: NextFunction) =>
 {
-  Seguro.find()
+  const limit = (req.query.limit ? +req.query.limit : 3);
+
+  Seguro.aggregate()
+  .limit(limit)
   .then(
     seguros => {
       return res.status(200).json({

@@ -27,7 +27,7 @@ export class SegurosService {
     (`${environment.protocol}://${environment.api_uri}/api/seguro/${name}`);
   }
 
-  public fetchAllSeguros()
+  public fetchAllSeguros(limit:number=3)
   {
     return this.http.get
     <{
@@ -39,7 +39,7 @@ export class SegurosService {
         seguros: Seguro[]
       }
     }>
-    (`${environment.protocol}://${environment.api_uri}/api/seguro`)
+    (`${environment.protocol}://${environment.api_uri}/api/seguro?limit=${limit}`)
     .pipe(
       map(res => {
         if (res.content)
